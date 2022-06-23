@@ -11,30 +11,61 @@
     }
 }
 
+//declare the score
+let playerScore = 0;
+let computerScore = 0;
+let roundNumber = 0;
+
 // play a round
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection == computerSelection) {
+    playerSelection = playerSelection.toUpperCase();
+    if (playerSelection == computerSelection){
         return 'Tie!';
     } else if (
     (playerSelection === 'ROCK' && computerSelection === 'SCISSORS' ) ||
     (playerSelection === 'PAPER' && computerSelection === 'ROCK') ||
     (playerSelection === 'SCISSORS' && computerSelection === 'PAPER')) 
      {
-         return 'You won!';
-    } else {
-        return 'You lose! '+ computerSelection + ' beats ' + playerSelection;
+        playerScore++; 
+        return 'You won! ' + playerSelection + ' beats ' + computerSelection;
+    } else if (
+    (playerSelection === 'SCISSORS' && computerSelection === 'ROCK' ) ||
+    (playerSelection === 'PAPER' && computerSelection === 'SCISSORS') ||
+    (playerSelection === 'ROCK' && computerSelection === 'PAPER')) 
+    {
+        computerScore++;
+        return 'You lose! ' + computerSelection + ' beats ' + playerSelection;
+}
+else {
+    return 'Choose between rock, paper and scissors!';
 }
 }
 
-// hardcode player's choice
-const playerSelection = 'ROCK';
+function game() {
+    for (let i = 0; i < 5; i++) {
+        playerSelection = getPlayerChoice();
+        computerSelection = computerPlay();
+        roundNumber++;
+        console.log('Round ' + roundNumber);
+        console.log(playRound(playerSelection, computerSelection));
+        console.log('Player ' + playerScore + ' : ' + computerScore + ' Computer');
+     }  
+     if (roundNumber===5) {
+         console.log(determineWinner());
+     }
+}
 
-//announce player's choice
-console.log('You chose ' + playerSelection);
+function determineWinner() {
+    if (playerScore > computerScore) {
+        return 'YOU WON THE GAME!';
+    }
+    else {
+        return 'COMPUTER WON THE GAME!';
+    }
+}
 
-//announce computer's choice
-const computerSelection = computerPlay();
-console.log('Computer chose '+computerSelection);
+function getPlayerChoice() {
+    return prompt('What is your choice?');
+}
 
-//who is the winner?
-console.log(playRound(playerSelection, computerSelection)); 
+game();
