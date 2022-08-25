@@ -1,3 +1,24 @@
+const btns = document.querySelectorAll('.choice');
+
+
+
+let playerScore = 0;
+let computerScore = 0;
+let roundNumber = 0;
+
+// Start Game when user clicks on a button (and makes a choice)
+btns.forEach((button) =>
+    button.addEventListener('click', () => {
+      if (playerScore >= 5 || computerScore >= 5) {
+        return determineWinner();
+          }
+    else {
+        return game(button.dataset.choice);
+    }
+}
+)
+);
+
  // Generate computer's choice
  function computerPlay() {
     let number = Math.floor(Math.random()*3);
@@ -11,14 +32,9 @@
     }
 }
 
-//declare the score
-let playerScore = 0;
-let computerScore = 0;
-let roundNumber = 0;
 
 // play a round
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toUpperCase();
     if (playerSelection == computerSelection){
         return 'Tie!';
     } else if (
@@ -36,36 +52,22 @@ function playRound(playerSelection, computerSelection) {
         computerScore++;
         return 'You lose! ' + computerSelection + ' beats ' + playerSelection;
 }
-else {
-    return 'Choose between rock, paper and scissors!';
-}
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        playerSelection = getPlayerChoice();
-        computerSelection = computerPlay();
-        roundNumber++;
-        console.log('Round ' + roundNumber);
-        console.log(playRound(playerSelection, computerSelection));
-        console.log('Player ' + playerScore + ' : ' + computerScore + ' Computer');
-     }  
-     if (roundNumber===5) {
-         console.log(determineWinner());
-     }
-}
+function game(playerSelection) {
+            roundNumber++;
+            computerSelection = computerPlay();
+            console.log('Round ' + roundNumber);
+            console.log(playRound(playerSelection, computerSelection));
+            console.log('Player ' + playerScore + ' : ' + computerScore + ' Computer');
+        }
+        
 
 function determineWinner() {
     if (playerScore > computerScore) {
-        return 'YOU WON THE GAME!';
+        console.log('YOU WON THE GAME!');
     }
     else {
-        return 'COMPUTER WON THE GAME!';
+        console.log('COMPUTER WON THE GAME!');
     }
 }
-
-function getPlayerChoice() {
-    return prompt('What is your choice?');
-}
-
-game();
