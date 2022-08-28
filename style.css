@@ -1,4 +1,63 @@
+
 #buttons {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.choice {
+    font-size: 5em;
+    border: none;
+    outline: none;
+    background: none;
+    transition: 100ms;
+}
+
+.choice:hover {
+    transform: scale(1.1);
+}
+
+#scoreboard {
     display: flex;
     justify-content: space-around;
 }
+
+body {
+    display:flex;
+    flex-direction: column;
+    background-color: #CCC;
+    justify-content: space-around;
+}
+
+header {
+   display: flex;
+   justify-content: center;
+   font-size: 4em;
+}
+
+h2 {
+display: flex;
+justify-content: center;
+font-size: 3em;
+}
+
+#scoreboard {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    font-size: 3em;
+    align-items: center;
+}
+
+#results {
+    font-size: 2em;
+}
+
+.score {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+
+
+
