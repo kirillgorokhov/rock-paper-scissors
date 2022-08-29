@@ -1,63 +1,74 @@
-const btns = document.querySelectorAll(".choice");
-
-
+const buttons = document.querySelectorAll(".choice");
 
 let playerScore = 0;
 let computerScore = 0;
-let roundNumber = 0;
 
 
-function disableButtons() {
-    btns.forEach(elem => {
-        elem.disabled = true
+
+function gameOver() {
+    buttons.forEach(element => {
+        element.disabled = true
     })
 }
 
 // Start Game when user clicks on a button (and makes a choice)
-btns.forEach(button =>
+buttons.forEach(button =>
     button.addEventListener('click', () => {
-        console.log(button.dataset.choice);
-        playRound(button.dataset.choice);
+        playGame(button.dataset.choice);
     }
 ));
 
+const WON = 1;
+const TIE = 0;
+const LOST = -1;
+let gameRules={
+    'rock':
+        {'scissors':WON,
+        'paper':LOST,
+        'rock':TIE},
+    'paper':
+        {'scissors':LOST,
+        'paper':TIE,
+        'rock':WON},
+    'scissors':
+        {'scissors':TIE,
+        'paper  ': WON,
+        'rock': LOST}
+    }
+
  // Generate computer's choice
  function computerPlay() {
-    let choices = ['ROCK', 'PAPER', 'SCISSORS'];
+    let choices = ['rock', 'paper', 'scissors'];
     return choices[Math.floor(Math.random() * choices.length)];
     }
 
 
-// play a round
-function playRound(playerSelection) {
+// play the game
+function playGame(playerSelection) {
     computerSelection = computerPlay();
-    let result = ""
+    console.log(computerSelection);
+    console.log(gameRules);
+    let result = "";
 
-    if (playerSelection == computerSelection)
+    if (gameRules[playerSelection][computerSelection] == TIE)
     {
         result = 'Tie!';
     } 
-    else if (
-    (playerSelection === 'ROCK' && computerSelection === 'SCISSORS' ) ||
-    (playerSelection === 'PAPER' && computerSelection === 'ROCK') ||
-    (playerSelection === 'SCISSORS' && computerSelection === 'PAPER')) 
+    else if (gameRules[playerSelection][computerSelection] == WON) 
      {
         playerScore++; 
         result = ('You won! ' + playerSelection + ' beats ' + computerSelection);
         if (playerScore == 5) {
             result += ' You won the game! Reload the page to play another one.'
-            disableButtons();
+            gameOver();
         }
-    } else if (
-    (playerSelection === 'SCISSORS' && computerSelection === 'ROCK' ) ||
-    (playerSelection === 'PAPER' && computerSelection === 'SCISSORS') ||
-    (playerSelection === 'ROCK' && computerSelection === 'PAPER')) 
+    } else if (gameRules[playerSelection][computerSelection] == LOST) 
     {
         computerScore++;
         result = ('You lose! ' + computerSelection + ' beats ' + playerSelection);
         if (computerScore == 5) {
             result += ' Computer won the game! Reload the page to play another one.'
-            disableButtons();
+            gameOver();
         }
 }
 document.getElementById('results').textContent = result;
